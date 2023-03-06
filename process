@@ -1,0 +1,52 @@
+PROCESS MODÜLÜ
+process modülü, Node.js programının çalıştığı süreci temsil eden bir global değişkendir. Bu modül sayesinde, programımızın çalışma ortamı hakkında bilgi alabilir ve belirli işlemler yapabiliriz.
+process.argv: Bu özellik, Node.js uygulamasının komut satırı argümanlarını dizi şeklinde içerir. Örneğin, aşağıdaki kodu çalıştırdığımızda:
+node myApp.js arg1 arg2 arg3
+process.argv aşağıdaki değeri döndürecektir:
+['node', 'myApp.js', 'arg1', 'arg2', 'arg3']
+Bu özelliği kullanarak, uygulamanın hangi argümanlarla çağrıldığını kontrol edebilirsiniz. Örneğin, aşağıdaki kod, process.argv dizisi içerisinde belirtilen argümanlara göre farklı çıktılar verecektir:
+if (process.argv.includes('--debug')) {
+  console.log('Debug mode enabled');
+} else {
+  console.log('Debug mode disabled');
+}
+process.env: Bu özellik, Node.js uygulamasının çalıştığı ortam değişkenlerini içeren bir nesnedir. Örneğin, aşağıdaki kod, NODE_ENV ortam değişkeninin değerine göre farklı çıktılar verecektir:
+if (process.env.NODE_ENV === 'development') {
+  console.log('Running in development mode');
+} else if (process.env.NODE_ENV === 'production') {
+  console.log('Running in production mode');
+} else {
+  console.log('Unknown NODE_ENV value');
+}
+process.exit(): Bu fonksiyon, Node.js uygulamasını sonlandırır. Genellikle bir hata oluştuğunda veya işlem tamamlandığında uygulamanın sonlandırılması gerektiğinde kullanılır. Aşağıdaki kod, bir hata oluştuğunda uygulamayı sonlandıracaktır:
+const fs = require('fs');
+fs.readFile('myfile.txt', (err, data) => {
+  if (err) {
+    console.error(err);
+    process.exit(1); // hata durumunda uygulamayı sonlandır
+  }
+  console.log(data);
+});
+process.on(): Bu fonksiyon, Node.js uygulamasının farklı olayları dinlemesine olanak tanır. Örneğin, aşağıdaki kod, uygulamanın SIGINT (CTRL+C) sinyali aldığında sonlandırılmasını sağlar:
+process.on('SIGINT', () => {
+  console.log('Uygulama sonlandırıldı');
+  process.exit();
+});  (SIGINT, bir işlemi durdurmak için kullanılan bir sinyaldir. Bu sinyal, Ctrl+C tuş kombinasyonuyla gönderilebilir ve genellikle bir işlemi anında sonlandırmak için kullanılır. )
+process.cwd(): Bu fonksiyon, uygulamanın çalıştığı dizini döndürür. Aşağıdaki kod, uygulamanın çalıştığı dizinin tam yolunu yazdırır:
+console.log(process.cwd());
+process.pid: Bu özellik, Node.js uygulamasının PID'sini (Process ID) döndürür.  Bu özellik, işlemi diğer işlemlerle etkileşime girmek için kullanabilirsiniz.
+process.memoryUsage(), Node.js işlemi tarafından kullanılan bellek miktarını sağlar. Bu yöntem, kullanılan bellek hakkında ayrıntılı bilgi sağlar ve uygulamanın bellek kullanımını takip etmek için kullanılabilir. Örneğin, aşağıdaki kod, Node.js işlemi tarafından kullanılan bellek miktarını konsola yazar:
+console.log(process.memoryUsage());
+process.argv: Node.js uygulamasının çalıştırıldığı komut satırı argümanlarını içeren bir diziye erişmenizi sağlar.
+process.env: Node.js uygulaması için tüm ortam değişkenlerine erişmenizi sağlar. process.env.PORT gibi bir özellik belirleyebilir ve daha sonra bu özelliği kullanarak uygulamanızın hangi portta çalışacağını belirleyebilirsiniz.
+process.cwd(): Node.js işlemi için çalışma dizinini döndürür.
+process.chdir(directory): Node.js işlemi için çalışma dizinini değiştirir.
+process.exit([code]): Node.js işlemi kapatır. İsteğe bağlı olarak, çıkış kodunu belirtebilirsiniz. Varsayılan çıkış kodu 0'dır.
+process.on(eventName, callback): Belirtilen olayı dinler ve bir geri çağrı işlevi tetikler. Bu işlev, programın düzgün bir şekilde sonlandırılmasını sağlamak veya kullanıcı tarafından belirtilen bir olayın gerçekleşmesine yanıt olarak bir işlem yapmak için kullanılabilir.
+process.pid: Node.js işlemi için işlem kimliğini döndürür.
+process.platform: Node.js işlemi için çalıştırılan işletim sistemi platformunu döndürür.
+process.version: Node.js sürümünü döndürür.
+process.uptime(): Node.js işlemi için çalışma süresini döndürür.
+process.memoryUsage(): Node.js işlemi için bellek kullanımını döndürür.
+process.nextTick(callback): Bir sonraki döngüde yürütülecek olan bir işlevi kaydeder.
+Bu özelliklerin yanı sıra, process modülü ayrıca diğer birçok özellik ve komut içerir. Bunlar arasında signal events, stdin, stdout, stderr gibi özellikler yer alır. Ancak yukarıda listelenen özellikler, process modülünün en temel ve sıklıkla kullanılan özellikleridir.
